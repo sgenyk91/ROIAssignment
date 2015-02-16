@@ -37,11 +37,12 @@ function passportModification(passport) {
         }
 
         if (user) {
-          return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+          return done(null, false);
         } else {
           var newUser = new User();
           newUser.local.email = email;
           newUser.local.password = newUser.generateHash(password);
+          newUser.local.id = newUser.generateHash(email);
           newUser.local.confirmed = false;
           newUser.save(function(err) {
             if (err) {
@@ -49,7 +50,7 @@ function passportModification(passport) {
             }
             return done(null, newUser);
           });
-          util.confirmationMessage(email);
+          util.confirmationMessage(email, newUser.local.id);
         }
       });    
     });
@@ -69,7 +70,7 @@ function passportModification(passport) {
       }
 
       if (!user || !user.checkPassword(password)) {
-        return done(null, false, req.flash('loginMessage', 'Invalid username or password'));
+        return done(null, false);
       }
 
       return done(null, user);

@@ -8,9 +8,9 @@ module.exports = {
 
 function routeMiddleware(app, passport) {
 
-  // app.get('/', function(req, res) {
-  //   res.render('index');
-  // });
+  app.get('/', function(req, res) {
+    res.render('home');
+  });
 
   // app.get('/login', function(req, res) {
   //   res.render('login'); 
@@ -21,9 +21,9 @@ function routeMiddleware(app, passport) {
     failureRedirect: '/login'
   }));
 
-  // app.get('/signup', function(req, res) {
-  //   res.render('signup');
-  // });
+  app.get('/signup', function(req, res) {
+    res.render('signup');
+  });
 
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/confirmation',
@@ -46,9 +46,10 @@ function routeMiddleware(app, passport) {
   });
 
   app.get('/confirmed', function(req, res) {
+    console.log("CONFIRMED REQ: ", req.query);
     var email = req.user.local.email;
-    util.confirmUser(email);
-    util.successMessage(email);
+    var id = req.query.id;
+    util.confirmUser(email, id);
     res.redirect('/profile');
   });
 
@@ -78,9 +79,13 @@ function routeMiddleware(app, passport) {
   app.get('/twitter', passport.authenticate('twitter'));
 
   app.get('/twitter/callback', passport.authenticate('twitter', {
-    successRedirect: '/profile',
     failureRedirect: '/signup'
-  }));
+  }), function(req, res) {
+    console.log("TWITTER REQ: ", req);
+    var textToTweet = 'Welcome to ROI Assignment!';
+    // 'http://twitter.com/home?status=' + encodeURIComponent(textToTweet);
+    res.redirect('/profile');
+  });
 }
 
 function isLoggedIn(req, res, next) {

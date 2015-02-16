@@ -10,13 +10,13 @@ module.exports = {
   successMessage: successMessage
 };
 
-function confirmationMessage(email) {
+function confirmationMessage(email, id) {
   var params = {
     "message": {
       "from_email":"sgenyk91@gmail.com",
       "to":[{"email":email}],
       "subject": "Confirmation Email",
-      "html": "<a href='http://localhost:3000/confirmed?email="+email+"'>Click here to confirm email</a>",
+      "html": "<a href='http://localhost:3000/confirmed?email="+email+"&id="+id+"'>Click here to confirm email</a>",
       "autotext": "true",
       "track_opens": "true",
       "track_clicks": "true"
@@ -36,7 +36,7 @@ function successMessage(email) {
       "track_opens": "true",
       "track_clicks": "true"
     }
-  }
+  };
   sendEmail(params);
 }
 
@@ -53,19 +53,23 @@ function log(obj) {
   console.log("OBJ: ", obj);
 }
 
-function confirmUser(email) {
+function confirmUser(email, id) {
   User.findOne({'local.email': email}, function(err, user) {
     if (err) {
       console.log(err);
     }
-    user.local.confirmed = true;
 
-    user.save(function(err, product, numberAffected) {
-      if(err) {
-        console.log(err);
-      }
-      console.log("SNARF", product, numberAffected);
-    });
+    if (user.local.id === id) {
+      successMessage(email);
+      user.local.confirmed = true;
+      user.save(function(err, product, numberAffected) {
+        if(err) {
+          console.log(err);
+        }
+        console.log("SNARF", product, numberAffected);
+      });
+    }
+
   });
 }
 
@@ -80,6 +84,6 @@ function changePassword(email, newPassword) {
       if (err) {
         console.log(err);
       }
-    })
-  })
+    });
+  });
 }
