@@ -8,28 +8,26 @@ module.exports = {
 
 function routeMiddleware(app, passport) {
 
-  app.get('/', function(req, res) {
-    res.render('index');
-  });
+  // app.get('/', function(req, res) {
+  //   res.render('index');
+  // });
 
-  app.get('/login', function(req, res) {
-    res.render('login', { message: req.flash('loginMessage') }); 
-  });
+  // app.get('/login', function(req, res) {
+  //   res.render('login'); 
+  // });
 
   app.post('/login', passport.authenticate('local-login', {
     successRedirect: '/profile',
-    failureRedirect: '/login',
-    failureFlash: true
+    failureRedirect: '/login'
   }));
 
-  app.get('/signup', function(req, res) {
-    res.render('signup', { message: req.flash('signupMessage') });
-  });
+  // app.get('/signup', function(req, res) {
+  //   res.render('signup');
+  // });
 
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/confirmation',
-    failureRedirect: '/signup',
-    failureFlash: true
+    failureRedirect: '/signup'
   }));
 
   app.get('/profile', isLoggedIn, isConfirmed, function(req, res) {
@@ -70,9 +68,12 @@ function routeMiddleware(app, passport) {
   app.get('/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
   app.get('/facebook/callback', passport.authenticate('facebook', {
-    successRedirect: '/profile',
     failureRedirect: '/signup'
-  }));
+  }), function(req, res) {
+    var email = req.user.facebook.email;
+    util.successMessage(email);
+    res.redirect('/profile');
+  });
 
   app.get('/twitter', passport.authenticate('twitter'));
 

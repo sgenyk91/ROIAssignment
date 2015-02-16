@@ -1,0 +1,7 @@
+client/bower_components/*
+
+node_modules/*
+
+keys.js
+
+.DS_Store

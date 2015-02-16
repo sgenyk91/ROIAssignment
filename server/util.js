@@ -22,7 +22,7 @@ function confirmationMessage(email) {
       "track_clicks": "true"
     }
   };
-  sendTheMail(params);
+  sendEmail(params);
 }
 
 function successMessage(email) {
@@ -37,11 +37,11 @@ function successMessage(email) {
       "track_clicks": "true"
     }
   }
-  sendTheMail(params);
+  sendEmail(params);
 }
 
 
-function sendTheMail(params) {
+function sendEmail(params) {
   email.messages.send(params, function(res) {
     log(res);
   }, function(err) {

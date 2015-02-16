@@ -84,6 +84,7 @@ function passportModification(passport) {
   },
   function(token, refreshToken, profile, done) {
 
+    console.log("FACEBOOK PROFILE: ", profile);
     process.nextTick(function() {
 
       User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
@@ -97,7 +98,6 @@ function passportModification(passport) {
         } else {
 
           var newUser = new User();
-          console.log("FACEBOOK: ", newUser.facebook, newUser.facebook.name);
           newUser.facebook.id = profile.id;         
           newUser.facebook.token = token;                
           newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
@@ -121,7 +121,7 @@ function passportModification(passport) {
       callbackURL: keys.twitter.callback
   },
   function(token, tokenSecret, profile, done) {
-
+    console.log("TWITTER PROFILE: ", profile);
     process.nextTick(function() {
 
       User.findOne({ 'twitter.id' : profile.id }, function(err, user) {
@@ -134,7 +134,6 @@ function passportModification(passport) {
           return done(null, user);
         } else {
           var newUser = new User();
-          console.log("TWITTER: ", newUser.twitter);
           newUser.twitter.id = profile.id;
           newUser.twitter.token = token;
           newUser.twitter.username = profile.username;

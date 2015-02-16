@@ -2,7 +2,6 @@ var express    = require('express');
 var ejs        = require('ejs');
 var bodyParser   = require('body-parser');
 var cookieParser = require('cookie-parser');
-var flash        = require('connect-flash');
 var morgan       = require('morgan');
 var session      = require('express-session');
 
@@ -31,7 +30,6 @@ function passportMiddleware(app, passport) {
   app.use(session({ secret: 'secret' }));
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use(flash());
 }
 
 function setCors(req, res, next) {
