@@ -1,0 +1,55 @@
+body {
+  background-color: black
+}
+
+* {
+  color: #00FFFF;
+  font-family: Helvetica;
+}
+
+.center {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+
+.styleButton {
+  display: block;
+  background-color: black;
+  border: 2px solid #00FFFF;
+  width: 40%;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #00FFFF;
+}
+
+.styleButton:hover {
+  border: 2px solid #00FFFF;
+  color: #00FFFF;
+  background-color: black;
+  -webkit-animation: changeColor 1s;
+  -webkit-animation-fill-mode: forwards;
+}
+
+.styleButton:hover > .fa {
+  -webkit-animation: changeColor 1s;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes changeColor {
+  from {
+    background-color: black;
+    color: #00FFFF;
+  }
+  to {
+    background-color: #00FFFF;
+    color: black;
+  }
+}
+
+input {
+  margin-bottom: 8px;
+  width: 20%;
+}

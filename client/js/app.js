@@ -6,6 +6,8 @@
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
   function config($stateProvider, $urlRouterProvider, $locationProvider) {
+
+    $locationProvider.html5Mode(true);
     
     $urlRouterProvider.otherwise('/');
 
@@ -26,6 +28,14 @@
         url: '/profile',
         templateUrl: '../views/profile.html'
       })
-    $locationProvider.html5Mode(true);
+      .state('confirmation', {
+        url: '/confirmation',
+        template: 'Please check your email to confirm your registration!'
+      })
+      .state('forgot', {
+        url: '/forgot',
+        templateUrl: '../views/forgot.html'
+      });
+
   }
 })();

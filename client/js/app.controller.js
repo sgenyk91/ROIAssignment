@@ -3,14 +3,15 @@
     .module('app')
     .controller('mainController', mainController);
 
-  mainController.$inject = ['$http'];
+  mainController.$inject = ['$http', '$window'];
 
-  function mainController($http) {
+  function mainController($http, $window) {
     var vm = this;
-    vm.getFacebook = getFacebook;
+    vm.getThirdPartyAuth = getThirdPartyAuth;
 
-    function getFacebook() {
-      $http.get('/facebook');
+    function getThirdPartyAuth(name) {
+      $window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname + name;
     }
+
   }
 })();

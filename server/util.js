@@ -7,7 +7,9 @@ module.exports = {
   changePassword: changePassword,
   confirmationMessage: confirmationMessage,
   confirmUser: confirmUser,
-  successMessage: successMessage
+  successMessage: successMessage,
+  sentEmail: sentEmail,
+  sentTweet: sentTweet
 };
 
 function confirmationMessage(email, id) {
@@ -81,6 +83,38 @@ function changePassword(email, newPassword) {
     user.local.password = user.generateHash(newPassword);
 
     user.save(function(err, product, numberAffected) {
+      if (err) {
+        console.log(err);
+      }
+    });
+  });
+}
+
+function sentEmail(email) {
+  User.findOne({'facebook.email': email}, function(err, user) {
+    if (err) {
+      console.log(err);
+    }
+    user.facebook.sentEmail = true;
+
+    user.save(function(err, product, numberAffected) {
+      console.log("FACEBOOK WOOHOO!");
+      if (err) {
+        console.log(err);
+      }
+    });
+  });
+}
+
+function sentTweet(username) {
+  User.findOne({'twitter.username': username}, function(err, user) {
+    if (err) {
+      console.log(err);
+    }
+    user.twitter.sentTweet = true;
+
+    user.save(function(err, product, numberAffected) {
+      console.log("WOOHOO!");
       if (err) {
         console.log(err);
       }

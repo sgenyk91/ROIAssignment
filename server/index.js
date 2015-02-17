@@ -10,8 +10,8 @@ var app = express();
 mongoose.connect('mongodb://localhost:27017');
 
 passportMod.passport(passport);
-config.view(app);
 config.express(app);
+config.view(app);
 config.passport(app, passport);
 router.route(app, passport);
 

@@ -1,20 +1,27 @@
-// var confirmation = require('./config/confirm');
-// var sendMessage  = require('./config/mailer');
+var Twit = require('twit');
 var util = require('./util');
+var keys = require('../keys');
 
 module.exports = {
   route: routeMiddleware
 };
 
+var T = new Twit({
+  consumer_key: keys.twitter.key,
+  consumer_secret: keys.twitter.secret,
+  access_token: keys.twitter.accessToken,
+  access_token_secret: keys.twitter.accessTokenSecret
+});
+
 function routeMiddleware(app, passport) {
 
   app.get('/', function(req, res) {
-    res.render('home');
+    res.render('index');
   });
 
-  // app.get('/login', function(req, res) {
-  //   res.render('login'); 
-  // });
+  app.get('/login', function(req, res) {
+    res.render('index'); 
+  });
 
   app.post('/login', passport.authenticate('local-login', {
     successRedirect: '/profile',
@@ -22,7 +29,7 @@ function routeMiddleware(app, passport) {
   }));
 
   app.get('/signup', function(req, res) {
-    res.render('signup');
+    res.render('index');
   });
 
   app.post('/signup', passport.authenticate('local-signup', {
@@ -31,7 +38,7 @@ function routeMiddleware(app, passport) {
   }));
 
   app.get('/profile', isLoggedIn, isConfirmed, function(req, res) {
-    res.render('profile', {
+    res.render('index', {
       user: req.user
     });
   });
@@ -42,7 +49,7 @@ function routeMiddleware(app, passport) {
   });
 
   app.get('/confirmation', function(req, res) {
-    res.render('confirmation');
+    res.render('index');
   });
 
   app.get('/confirmed', function(req, res) {
@@ -54,7 +61,7 @@ function routeMiddleware(app, passport) {
   });
 
   app.get('/forgot', function(req, res) {
-    res.render('forgot', {
+    res.render('index', {
       user: req.user
     });
   });
@@ -71,8 +78,11 @@ function routeMiddleware(app, passport) {
   app.get('/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signup'
   }), function(req, res) {
-    var email = req.user.facebook.email;
-    util.successMessage(email);
+    if (!req.user.facebook.sentEmail) {
+      var email = req.user.facebook.email;
+      util.successMessage(email);
+      util.sentEmail(email);
+    }
     res.redirect('/profile');
   });
 
@@ -81,9 +91,12 @@ function routeMiddleware(app, passport) {
   app.get('/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: '/signup'
   }), function(req, res) {
-    console.log("TWITTER REQ: ", req);
-    var textToTweet = 'Welcome to ROI Assignment!';
-    // 'http://twitter.com/home?status=' + encodeURIComponent(textToTweet);
+    if (!req.user.twitter.sentTweet) {
+      T.post('statuses/update', {status: '@' + req.user.twitter.username + ' Welcome to ROI Assignment!'}, function(err, data, response) {
+        console.log("TWTTIER ERROR: ", err);
+      });
+      util.sentTweet(req.user.twitter.username);
+    }
     res.redirect('/profile');
   });
 }

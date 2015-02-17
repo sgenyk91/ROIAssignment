@@ -12,13 +12,15 @@ var userSchema = mongoose.Schema({
     displayName: String,
     id: String,
     token: String,
-    username: String
+    username: String,
+    sentTweet: Boolean
   },
   facebook: {
     email: String,
     id: String,
     name: String,
-    token: String
+    token: String,
+    sentEmail: Boolean
   }
 });
 

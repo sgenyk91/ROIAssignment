@@ -1,6 +1,7 @@
-var express    = require('express');
-var ejs        = require('ejs');
+var express      = require('express');
+var ejs          = require('ejs');
 var bodyParser   = require('body-parser');
+var cors         = require('cors');
 var cookieParser = require('cookie-parser');
 var morgan       = require('morgan');
 var session      = require('express-session');
@@ -13,7 +14,7 @@ module.exports = {
 
 function viewMiddleware(app) {
   app.use(express.static(__dirname + '/../../client'));
-  app.set('views', __dirname + '/../../client/views');
+  app.set('views', __dirname + '/../../client');
   app.engine('html', ejs.renderFile);
   app.set('view engine', 'html');
 }
@@ -41,9 +42,9 @@ function setCors(req, res, next) {
 }
 
 var defaultCorsHeaders = {
-  "access-control-allow-origin": "*",
-  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
   "Allow": "GET, POST, PUT, DELETE, OPTIONS",
-  "access-control-allow-headers": "content-type, accept",
-  "access-control-max-age": 120
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, Content-Length, X-Requested-With, Access-Control-Allow-Origin",
+  "Access-Control-Max-Age": 86400
 };

@@ -103,6 +103,7 @@ function passportModification(passport) {
           newUser.facebook.token = token;                
           newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
           newUser.facebook.email = profile.emails[0].value;
+          newUser.facebook.sentEmail = false;
 
           newUser.save(function(err) {
             if (err) {
@@ -139,6 +140,7 @@ function passportModification(passport) {
           newUser.twitter.token = token;
           newUser.twitter.username = profile.username;
           newUser.twitter.displayName = profile.displayName;
+          newUser.twitter.sentTweet = false;
 
           newUser.save(function(err) {
               if (err) {

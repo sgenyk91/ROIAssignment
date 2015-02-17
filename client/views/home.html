@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>ROI Assignment</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-  </head>
-  <body>
-    <h3>Login or Signup</h3>
-    <a href="/login" class="btn btn-default">Local Login</a>
-    <a href="/signup" class="btn btn-default">Local Signup</a>
-    <button class="btn btn-primary" ng-click="main.getFacebook();"><span class="fa fa-facebook"></span> Facebook</button>
-    <a href="/twitter" class="btn btn-info"><span class="fa fa-twitter"></span> Twitter</a>
-  </body>
-</html>
+<div class="center">
+  <h2 align="middle">Login or Signup</h2>
+  <a href="/login" class="btn btn-default styleButton">Local Login</a>
+  <a href="/signup" class="btn btn-default styleButton">Local Signup</a>
+  <button class="btn styleButton" ng-click="main.getThirdPartyAuth('facebook');"><span class="fa fa-facebook"></span> Facebook</button>
+  <button class="btn styleButton" ng-click="main.getThirdPartyAuth('twitter');"><span class="fa fa-twitter"></span> Twitter</button>
+</div>
