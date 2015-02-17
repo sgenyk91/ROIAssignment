@@ -85,7 +85,6 @@ function passportModification(passport) {
   },
   function(token, refreshToken, profile, done) {
 
-    console.log("FACEBOOK PROFILE: ", profile);
     process.nextTick(function() {
 
       User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
@@ -123,7 +122,7 @@ function passportModification(passport) {
       callbackURL: keys.twitter.callback
   },
   function(token, tokenSecret, profile, done) {
-    console.log("TWITTER PROFILE: ", profile);
+    
     process.nextTick(function() {
 
       User.findOne({ 'twitter.id' : profile.id }, function(err, user) {

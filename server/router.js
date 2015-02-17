@@ -45,7 +45,8 @@ function routeMiddleware(app, passport) {
 
   app.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
+    console.log("LOGOUT: ", req.isAuthenticated());
+    res.render('index');
   });
 
   app.get('/confirmation', function(req, res) {
@@ -53,7 +54,6 @@ function routeMiddleware(app, passport) {
   });
 
   app.get('/confirmed', function(req, res) {
-    console.log("CONFIRMED REQ: ", req.query);
     var email = req.user.local.email;
     var id = req.query.id;
     util.confirmUser(email, id);
@@ -102,6 +102,7 @@ function routeMiddleware(app, passport) {
 }
 
 function isLoggedIn(req, res, next) {
+  console.log("LOGGED IN: ", req.isAuthenticated());
   if (req.isAuthenticated()) {
     return next();
   }

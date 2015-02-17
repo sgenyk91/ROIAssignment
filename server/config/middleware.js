@@ -1,7 +1,6 @@
 var express      = require('express');
 var ejs          = require('ejs');
 var bodyParser   = require('body-parser');
-var cors         = require('cors');
 var cookieParser = require('cookie-parser');
 var morgan       = require('morgan');
 var session      = require('express-session');

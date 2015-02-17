@@ -68,7 +68,6 @@ function confirmUser(email, id) {
         if(err) {
           console.log(err);
         }
-        console.log("SNARF", product, numberAffected);
       });
     }
 
@@ -98,7 +97,6 @@ function sentEmail(email) {
     user.facebook.sentEmail = true;
 
     user.save(function(err, product, numberAffected) {
-      console.log("FACEBOOK WOOHOO!");
       if (err) {
         console.log(err);
       }
@@ -114,7 +112,6 @@ function sentTweet(username) {
     user.twitter.sentTweet = true;
 
     user.save(function(err, product, numberAffected) {
-      console.log("WOOHOO!");
       if (err) {
         console.log(err);
       }
